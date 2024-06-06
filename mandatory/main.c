@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:32:35 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/06 12:56:37 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/06 20:35:38 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,11 @@ int	check_arg(int argc, char *argv[])
 	int		len;
 
 	if (argc != 2)
-	{
-		ft_putendl_fd("Error", STDERR_FILENO);
-		ft_putendl_fd("Invalid Argument", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
-
+		return (error(EXIT_FAILURE, "Invalid Argument"));
 	map_file = argv[1];
 	len = ft_strlen(map_file);
 	if (ft_strncmp(map_file + len - 4, ".ber", 4) != 0)
-	{
-		ft_putendl_fd("Error", STDERR_FILENO);
-		ft_putendl_fd("Invalid File Extension", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
+		return (error(EXIT_FAILURE, "Invalid File Extension"));
 	return (EXIT_SUCCESS);
 }
 
@@ -39,6 +30,9 @@ int	main(int argc, char *argv[])
 {
 	if (check_arg(argc, argv) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	if (set_game_data(argv) == EXIT_FAILURE)
+		return (EXIT_FAILURE); // TODO 메모리 해제
+	
 
 	return (EXIT_SUCCESS);
 }

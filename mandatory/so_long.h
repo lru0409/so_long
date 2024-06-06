@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:32:52 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/06 12:49:12 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/06 21:04:50 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,22 @@
 # include <mlx.h>
 # include "../libft/libft.h"
 
+# define TRUE 1
+# define FALSE 0
+
+# define EMPTY_PATH "./textures/empty.xpm"
+# define WALL_PATH "./textures/wall.xpm"
+# define ITEM_PATH "./textures/item.xpm"
+# define EXIT_PATH "./textures/exit.xpm"
+# define PLAYER_PATH "./textures/player.xpm"
+
+# define EMPTY '0'
+# define WALL '1'
+# define ITEM 'C'
+# define EXIT 'E'
+# define PLAYER 'P'
+
+
 typedef struct s_images
 {
 	void	*empty;
@@ -30,9 +46,17 @@ typedef struct s_images
 
 typedef struct s_game
 {
-	char	**map;
-	void	*mlx;
-	void	*win;
+	char		**map;
+	int			item_count;
+	void		*mlx;
+	t_images	*images;
+	void		*win;
 }	t_game;
+
+// util
+int		error(int ret, char *message);
+
+// set_game_data
+t_game	*set_game_data(char *argv);
 
 #endif
