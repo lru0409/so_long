@@ -6,59 +6,33 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:41:45 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/06 20:32:59 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/07 18:49:21 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	*get_map_str(int fd)
-{
-	char	*line;
-	char	*map_str;
-	char	*temp;
+static int	set_map(char *filename, t_game *game);
+static char	*get_map_str(int fd);
+static int	find_invalid_newline(char *map_str);
+static int	set_images(t_game *game);
 
-	map_str = ft_strdup("");
-	while (TRUE)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		temp = map_str;
-		map_str = ft_strjoin(map_str, line);
-		free(line);
-		free(temp);
-		if (!map_str)
-			return (NULL);
-	}
-	return (map_str);
+t_game	*set_game_data(char *argv[])
+{
+	t_game	*game;
+
+	game = (t_game *)malloc(sizeof(game));
+	if (!game)
+		return (NULL);
+	if (set_map(argv[1], game) == EXIT_FAILURE) // TODO : check component
+		return (NULL); // TODO : 메모리 해제
+	game->mlx = mlx_init();
+	if (set_images(game))
+		return (NULL); // TODO : 메모리 해제
+	return (game);
 }
 
-int	find_invalid_newline(char *map_str)
-{
-	int	index;
-	int	nl_flag;
-
-	if (map_str[0] == '\n')
-		return (TRUE);
-	if (map_str[ft_strlen(map_str) - 1] == '\n')
-		return (TRUE);
-	index = 0;
-	nl_flag = FALSE;
-	while (map_str[index])
-	{
-		if (map_str[index] == '\n' && nl_flag)
-			return (TRUE);
-		else if (map_str[index] == '\n')
-			nl_flag = TRUE;
-		else
-			nl_flag = FALSE;
-		index++;
-	}
-	return (FALSE);
-}
-
-int	set_map(char *filename, t_game *game)
+static int	set_map(char *filename, t_game *game)
 {
 	int		fd;
 	char	*map_str;
@@ -82,7 +56,53 @@ int	set_map(char *filename, t_game *game)
 	return (EXIT_SUCCESS);
 }
 
-int	set_images(t_game *game)
+static char	*get_map_str(int fd)
+{
+	char	*line;
+	char	*map_str;
+	char	*temp;
+
+	map_str = ft_strdup("");
+	while (TRUE)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		temp = map_str;
+		map_str = ft_strjoin(map_str, line);
+		free(line);
+		free(temp);
+		if (!map_str)
+			return (NULL);
+	}
+	return (map_str);
+}
+
+static int	find_invalid_newline(char *map_str)
+{
+	int	index;
+	int	nl_flag;
+
+	if (map_str[0] == '\n')
+		return (TRUE);
+	if (map_str[ft_strlen(map_str) - 1] == '\n')
+		return (TRUE);
+	index = 0;
+	nl_flag = FALSE;
+	while (map_str[index])
+	{
+		if (map_str[index] == '\n' && nl_flag)
+			return (TRUE);
+		else if (map_str[index] == '\n')
+			nl_flag = TRUE;
+		else
+			nl_flag = FALSE;
+		index++;
+	}
+	return (FALSE);
+}
+
+static int	set_images(t_game *game)
 {
 	int	w;
 	int	h;
@@ -96,19 +116,4 @@ int	set_images(t_game *game)
 	game->images->exit = mlx_xpm_file_to_image(game->mlx, EXIT_PATH, &w, &h);
 	game->images->player = mlx_xpm_file_to_image(game->mlx, PLAYER_PATH, &w, &h);
 	return (EXIT_SUCCESS);
-}
-
-t_game	*set_game_data(char *argv)
-{
-	t_game	*game;
-
-	game = (t_game *)malloc(sizeof(game));
-	if (!game)
-		return (NULL);
-	if (set_map(argv[1], game) == EXIT_FAILURE) // TODO : check component
-		return (NULL); // TODO : 메모리 해제
-	game->mlx = mlx_init();
-	if (set_images(game))
-		return (NULL); // TODO : 메모리 해제
-	return (game);
 }

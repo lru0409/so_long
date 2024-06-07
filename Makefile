@@ -22,13 +22,15 @@ bonus :
 
 $(NAME) : $(OBJS)
 	make -C libft all
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS) libft/libft.a
+	make -C mlx all
+	$(CC) $(FLAGS) -fsanitize=address -g3 -o $(NAME) $(OBJS) libft/libft.a -Lmlx -lmlx -framework OpenGL -framework Appkit
 
 %.o : %.c
-	$(CC) $(FLAGS) -c $^ -o $@
+	$(CC) $(FLAGS) -Imlx -c $^ -o $@
 
 clean :
 	make -C libft clean
+	make -C mlx clean
 	rm -f $(MANDATORY_OBJS) $(BONUS_OBJS)
 
 fclean : clean
