@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 12:53:16 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/07 19:37:39 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/17 10:57:46 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static t_path	*init_path_data(t_game *game);
 static int		init_visited(int map_size[], int **visited);
-static void	check_path(t_path *path, int y, int x);
+static void		check_path(t_game *game, t_path *path, int y, int x);
+static void		clear_path_data(t_path *path, int map_size[]);
 
 int	is_valid_path(t_game *game)
 {
@@ -23,9 +24,11 @@ int	is_valid_path(t_game *game)
 	path = init_path_data(game);
 	if (!path)
 		return (FALSE);
-	check_path(path, game->player_pos[Y], game->player_pos[X]);
-	if (path->exit_count != 1 || path->item_count != game->item_count)
-		return (error(FALSE, "Invalid Map"));
+	check_path(game, path, game->player[Y], game->player[X]);
+	if (path->exit_count != 1 || path->item_count != game->total_item_count) {
+		return (FALSE);
+	}
+	clear_path_data(path, game->map_size);
 	return (TRUE);
 }
 
@@ -37,11 +40,6 @@ static t_path	*init_path_data(t_game *game)
 	if (!path)
 		return (NULL);
 	path->map = game->map;
-	ft_memset(path->dir, 0, sizeof(path->dir));
-	path->dir[Y][UP] = -1;
-	path->dir[Y][DOWN] = 1;
-	path->dir[X][LEFT] = -1;
-	path->dir[X][RIGHT] = 1;
 	path->exit_count = 0;
 	path->item_count = 0;
 	path->visited = NULL;
@@ -52,7 +50,7 @@ static t_path	*init_path_data(t_game *game)
 		free(path);
 		return (NULL);
 	}
-	path->visited[game->player_pos[Y]][game->player_pos[X]] = TRUE;
+	path->visited[game->player[Y]][game->player[X]] = TRUE;
 	return (path);
 }
 
@@ -76,7 +74,7 @@ static int	init_visited(int map_size[], int **visited)
 	return (EXIT_SUCCESS);
 }
 
-static void	check_path(t_path *path, int y, int x)
+static void	check_path(t_game *game, t_path *path, int y, int x)
 {
 	int	index;
 	int	ny;
@@ -89,14 +87,25 @@ static void	check_path(t_path *path, int y, int x)
 	index = 0;
 	while (index < 4)
 	{
-		ny = y + path->dir[Y][index];
-		nx = x + path->dir[X][index];
+		ny = y + game->dir[Y][index];
+		nx = x + game->dir[X][index];
 		if (path->map[ny][nx] != WALL && !path->visited[ny][nx])
 		{
 			path->visited[ny][nx] = TRUE;
-			check_path(path, ny, nx);
+			check_path(game, path, ny, nx);
 		}
 		index++;
 	}
 	return ;
+}
+
+static void	clear_path_data(t_path *path, int map_size[])
+{
+	int	index;
+
+	index = 0;
+	while (index < map_size[HEIGHT])
+		free(path->visited[index++]);
+	free(path->visited);
+	free(path);
 }

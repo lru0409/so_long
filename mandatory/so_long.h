@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:32:52 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/07 19:34:29 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/17 11:16:11 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <mlx.h>
 # include "../libft/libft.h"
 
-# include <stdio.h> // TODO : 지우기
-
 # define TRUE 1
 # define FALSE 0
 
@@ -28,7 +26,7 @@
 # define WALL_PATH "./textures/wall.xpm"
 # define ITEM_PATH "./textures/item.xpm"
 # define EXIT_PATH "./textures/exit.xpm"
-# define PLAYER_PATH "./textures/player.xpm"
+# define PLAYER_PATH "./textures/player_down_0.xpm"
 
 # define EMPTY '0'
 # define WALL '1'
@@ -46,6 +44,12 @@
 # define LEFT 2
 # define RIGHT 3
 
+# define KEY_W 13
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_ESC 53
+# define CLOSE_BUTTON 17
 
 typedef struct s_images
 {
@@ -58,20 +62,22 @@ typedef struct s_images
 
 typedef struct s_game
 {
+	void		*mlx;
+	void		*win;
+	t_images	*images;
 	char		**map;
 	int			map_size[2];
-	int			player_pos[2];
-	int			item_count;
-	void		*mlx;
-	t_images	*images;
-	void		*win;
+	int			total_item_count;
+	int			current_item_count;
+	int			player[2];
+	int			dir[2][4];
+	int			move_count;
 }	t_game;
 
 typedef struct s_path
 {
 	char	**map;
 	int		**visited;
-	int		dir[2][4];
 	int		exit_count;
 	int		item_count;
 }	t_path;
@@ -80,10 +86,21 @@ typedef struct s_path
 int		error(int ret, char *message);
 
 // set_game_data
-t_game	*set_game_data(char *argv[]);
+int		set_game_data(t_game *game, char *argv[]);
+
+void	clear_game_data(t_game *game);
 
 // check_map
-int		is_invalid_map(t_game *game);
+int		is_valid_map(t_game *game);
 int		is_valid_path(t_game *game);
+
+// render
+void	render_sqaure(t_game *game, void *image, int y, int x);
+void	render_map(t_game *game);
+
+// manage_evnet
+// void	exit_game(t_game *game);
+int	exit_game();
+int		press_key(int keycode, t_game *game);
 
 #endif

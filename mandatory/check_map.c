@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 20:35:52 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/07 19:37:48 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/17 11:16:08 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 static int	is_rectangle(char **map, int map_size[]);
 static int	is_surrounded_wall(char **map);
-static int	is_valid_component(char **map, int *item_count, int player_pos[]);
+static int	is_valid_component(char **map, int *total_item_count, int player[]);
 static int	check_compoenent(char c, int cep_count[]);
 
-int	is_invalid_map(t_game *game)
+int	is_valid_map(t_game *game)
 {
 	if (is_rectangle(game->map, game->map_size) == FALSE)
-		return (error(EXIT_FAILURE, "Invalid Map"));
+		return (error(FALSE, "Invalid Map"));
 	if (is_surrounded_wall(game->map) == FALSE)
-		return (error(EXIT_FAILURE, "Invalid Map"));
-	if (is_valid_component(game->map, &game->item_count, game->player_pos) == FALSE)
-		return (error(EXIT_FAILURE, "Invalid Map"));
+		return (error(FALSE, "Invalid Map"));
+	if (is_valid_component(game->map, &game->total_item_count, game->player) == FALSE)
+		return (error(FALSE, "Invalid Map"));
 	if (is_valid_path(game) == FALSE)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+		return (error(FALSE, "Invalid Map"));
+	return (TRUE);
 }
 
 static int	is_rectangle(char **map, int map_size[])
@@ -35,12 +35,11 @@ static int	is_rectangle(char **map, int map_size[])
 	int	i;
 	int	j;
 
-	map_size[WIDTH] = 0; // TODO : 해야 할까?
 	i = 0;
 	while (map[i])
 	{
 		j = 0;
-		while (map[i][j]) // TODO : 한 줄로 안 되겠지?
+		while (map[i][j])
 			j++;
 		if (map_size[WIDTH] == 0)
 			map_size[WIDTH] = j;
@@ -78,20 +77,7 @@ static int	is_surrounded_wall(char **map)
 	return (TRUE);
 }
 
-static int	check_compoenent(char c, int cep_count[])
-{
-	if (c != EMPTY && c != WALL && c != ITEM && c != EXIT && c != PLAYER)
-		return (FALSE);
-	if (c == ITEM)
-		cep_count[0]++;
-	else if (c == EXIT)
-		cep_count[1]++;
-	else if (c == PLAYER)
-		cep_count[2]++;
-	return (TRUE);
-}
-
-static int	is_valid_component(char **map, int *item_count, int player_pos[])
+static int	is_valid_component(char **map, int *total_item_count, int player[])
 {
 	int	cep_count[3];
 	int index[2];
@@ -107,8 +93,9 @@ static int	is_valid_component(char **map, int *item_count, int player_pos[])
 				return (FALSE);
 			if (map[index[Y]][index[X]] == PLAYER)
 			{
-				player_pos[Y] = index[Y];
-				player_pos[X] = index[X];
+				player[Y] = index[Y];
+				player[X] = index[X];
+				map[index[Y]][index[X]] = EMPTY;
 			}
 			index[X]++;
 		}
@@ -116,6 +103,19 @@ static int	is_valid_component(char **map, int *item_count, int player_pos[])
 	}
 	if (cep_count[0] < 1 || cep_count[1] != 1 || cep_count[2] != 1)
 		return (FALSE);
-	*item_count = cep_count[0];
+	*total_item_count = cep_count[0];
+	return (TRUE);
+}
+
+static int	check_compoenent(char c, int cep_count[])
+{
+	if (c != EMPTY && c != WALL && c != ITEM && c != EXIT && c != PLAYER)
+		return (FALSE);
+	if (c == ITEM)
+		cep_count[0]++;
+	else if (c == EXIT)
+		cep_count[1]++;
+	else if (c == PLAYER)
+		cep_count[2]++;
 	return (TRUE);
 }

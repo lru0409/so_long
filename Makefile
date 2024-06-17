@@ -23,7 +23,7 @@ bonus :
 $(NAME) : $(OBJS)
 	make -C libft all
 	make -C mlx all
-	$(CC) $(FLAGS) -fsanitize=address -g3 -o $(NAME) $(OBJS) libft/libft.a -Lmlx -lmlx -framework OpenGL -framework Appkit
+	$(CC) $(FLAGS) -o $(NAME) $(OBJS) libft/libft.a -Lmlx -lmlx -framework OpenGL -framework Appkit
 
 %.o : %.c
 	$(CC) $(FLAGS) -Imlx -c $^ -o $@
