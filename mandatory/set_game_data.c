@@ -6,28 +6,17 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:41:45 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/19 10:51:43 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 11:56:49 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	set_map(char *filename, t_game *game);
+int			set_map(char *filename, t_game *game);
 static char	*get_map_str(int fd);
 static int	is_valid_newline(char *map_str);
-static int	set_images(t_game *game);
 
-int	set_game_data(t_game *game, char *argv[])
-{
-	if (set_map(argv[1], game) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	game->mlx = mlx_init();
-	if (set_images(game) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-static int	set_map(char *filename, t_game *game)
+int	set_map(char *filename, t_game *game)
 {
 	int		fd;
 	char	*map_str;
@@ -97,7 +86,7 @@ static int	is_valid_newline(char *map_str)
 	return (TRUE);
 }
 
-static int	set_images(t_game *game)
+int	set_images(t_game *game)
 {
 	int	w;
 	int	h;
@@ -112,4 +101,20 @@ static int	set_images(t_game *game)
 	game->images->player = mlx_xpm_file_to_image(game->mlx, \
 													PLAYER_PATH, &w, &h);
 	return (EXIT_SUCCESS);
+}
+
+void	clear_game_data(t_game *game)
+{
+	int	index;
+
+	if (game->images)
+		free(game->images);
+	if (game->map)
+	{
+		index = 0;
+		while (game->map[index])
+			free(game->map[index++]);
+		free(game->map);
+	}
+	free(game);
 }

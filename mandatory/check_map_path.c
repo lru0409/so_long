@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 12:53:16 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/19 10:52:49 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 11:54:26 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	is_valid_path(t_game *game)
 		return (FALSE);
 	check_path(game, path, game->player[Y], game->player[X]);
 	if (path->exit_count != 1 || path->item_count != game->total_item_count)
+	{
+		clear_path_data(path, game->map_size);
 		return (FALSE);
+	}
 	clear_path_data(path, game->map_size);
 	return (TRUE);
 }

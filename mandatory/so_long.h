@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:32:52 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/19 10:55:17 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 11:56:06 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ int		error(int ret, char *message);
 int		end(int ret, t_game *game);
 
 // set_game_data
-int		set_game_data(t_game *game, char *argv[]);
+int		set_map(char *filename, t_game *game);
+int		set_images(t_game *game);
+void	clear_game_data(t_game *game);
 
 // check_map
 int		is_valid_map(t_game *game);

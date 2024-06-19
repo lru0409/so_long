@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:32:35 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/19 10:54:59 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 11:55:49 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ int	main(int argc, char *argv[])
 	game = init_game_data();
 	if (!game)
 		return (EXIT_FAILURE);
-	if (set_game_data(game, argv) == EXIT_FAILURE)
+	if (set_map(argv[1], game) == EXIT_FAILURE)
 		return (end(EXIT_FAILURE, game));
 	if (is_valid_map(game) == FALSE)
+		return (end(EXIT_FAILURE, game));
+	game->mlx = mlx_init();
+	if (set_images(game) == EXIT_FAILURE)
 		return (end(EXIT_FAILURE, game));
 	game->win = mlx_new_window(game->mlx, \
 		game->map_size[WIDTH] * 64, game->map_size[HEIGHT] * 64, "so_long");
