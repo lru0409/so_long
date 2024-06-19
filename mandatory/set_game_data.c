@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:41:45 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/19 10:37:50 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 10:51:43 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	set_map(char *filename, t_game *game)
 	if (fd < 0)
 		return (error(EXIT_FAILURE, "Invalid File"));
 	map_str = get_map_str(fd);
-
 	close(fd);
 	if (!map_str)
 		return (EXIT_FAILURE);
@@ -110,22 +109,7 @@ static int	set_images(t_game *game)
 	game->images->wall = mlx_xpm_file_to_image(game->mlx, WALL_PATH, &w, &h);
 	game->images->item = mlx_xpm_file_to_image(game->mlx, ITEM_PATH, &w, &h);
 	game->images->exit = mlx_xpm_file_to_image(game->mlx, EXIT_PATH, &w, &h);
-	game->images->player = mlx_xpm_file_to_image(game->mlx, PLAYER_PATH, &w, &h);
+	game->images->player = mlx_xpm_file_to_image(game->mlx, \
+													PLAYER_PATH, &w, &h);
 	return (EXIT_SUCCESS);
-}
-
-void	clear_game_data(t_game *game)
-{
-	int	index;
-
-	if (game->images)
-		free(game->images);
-	if (game->map)
-	{
-		index = 0;
-		while (index < game->map_size[HEIGHT])
-			free(game->map[index++]);
-		free(game->map);
-	}
-	free(game);
 }

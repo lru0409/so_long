@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 12:53:16 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/18 20:00:02 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 10:52:49 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ int	is_valid_path(t_game *game)
 	if (!path)
 		return (FALSE);
 	check_path(game, path, game->player[Y], game->player[X]);
-	if (path->exit_count != 1 || path->item_count != game->total_item_count) {
+	if (path->exit_count != 1 || path->item_count != game->total_item_count)
 		return (FALSE);
-	}
 	clear_path_data(path, game->map_size);
 	return (TRUE);
 }
@@ -44,7 +43,8 @@ static t_path	*init_path_data(t_game *game)
 	path->item_count = 0;
 	path->visited = NULL;
 	path->visited = (int **)malloc(sizeof(int *) * game->map_size[HEIGHT]);
-	if (!path->visited || init_visited(game->map_size, path->visited) == EXIT_FAILURE)
+	if (!path->visited || \
+		init_visited(game->map_size, path->visited) == EXIT_FAILURE)
 	{
 		free(path->visited);
 		free(path);
@@ -85,7 +85,7 @@ static void	check_path(t_game *game, t_path *path, int y, int x)
 	if (path->map[y][x] == EXIT)
 	{
 		path->exit_count += 1;
-		return;
+		return ;
 	}
 	index = 0;
 	while (index < 4)

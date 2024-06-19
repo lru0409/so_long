@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:32:52 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/17 11:16:11 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 10:55:17 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,10 @@ typedef struct s_path
 
 // util
 int		error(int ret, char *message);
+int		end(int ret, t_game *game);
 
 // set_game_data
 int		set_game_data(t_game *game, char *argv[]);
-
-void	clear_game_data(t_game *game);
 
 // check_map
 int		is_valid_map(t_game *game);
@@ -99,8 +98,7 @@ void	render_sqaure(t_game *game, void *image, int y, int x);
 void	render_map(t_game *game);
 
 // manage_evnet
-// void	exit_game(t_game *game);
-int	exit_game();
+int		exit_game(t_game *game);
 int		press_key(int keycode, t_game *game);
 
 #endif

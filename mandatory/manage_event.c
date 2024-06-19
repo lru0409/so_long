@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:16:59 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/18 19:52:39 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 10:56:10 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ static void	game_clear(t_game *game);
 int	exit_game(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->win);
-	clear_game_data(game);
-	exit(EXIT_SUCCESS);
+	exit(end(EXIT_SUCCESS, game));
 }
 
 int	press_key(int keycode, t_game *game)
@@ -44,11 +43,13 @@ static void	move_player(t_game *game, int dir_index)
 
 	ny = game->player[Y] + game->dir[Y][dir_index];
 	nx = game->player[X] + game->dir[X][dir_index];
-	if (game->map[ny][nx] == 'E' && game->current_item_count == game->total_item_count)
+	if (game->map[ny][nx] == 'E' && \
+		game->current_item_count == game->total_item_count)
 		game_clear(game);
 	if (game->map[ny][nx] == WALL || game->map[ny][nx] == EXIT)
-		return;
-	if (game->map[ny][nx] == ITEM) {
+		return ;
+	if (game->map[ny][nx] == ITEM)
+	{
 		game->current_item_count++;
 		game->map[ny][nx] = EMPTY;
 		render_sqaure(game, game->images->empty, ny, nx);

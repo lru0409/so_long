@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 20:35:52 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/19 10:42:50 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 10:49:42 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	is_valid_map(t_game *game)
 		return (error(FALSE, "Map Is Not Rectangle."));
 	if (is_surrounded_wall(game->map) == FALSE)
 		return (error(FALSE, "Map Is Not Surrounded By Wall."));
-	if (is_valid_component(game->map, &game->total_item_count, game->player) == FALSE)
+	if (is_valid_component(game->map, &game->total_item_count, \
+							game->player) == FALSE)
 		return (error(FALSE, "Map Component Is Invalid."));
 	if (is_valid_path(game) == FALSE)
 		return (error(FALSE, "Map Path Is Invalid."));
@@ -53,8 +54,8 @@ static int	is_rectangle(char **map, int map_size[])
 
 static int	is_surrounded_wall(char **map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map[i])
@@ -80,14 +81,14 @@ static int	is_surrounded_wall(char **map)
 static int	is_valid_component(char **map, int *total_item_count, int player[])
 {
 	int	cep_count[3];
-	int index[2];
+	int	index[2];
 
 	ft_memset(cep_count, 0, sizeof(cep_count));
-	index[Y] = 0;
-	while (map[index[Y]])
+	index[Y] = -1;
+	while (map[++index[Y]])
 	{
-		index[X] = 0;
-		while (map[index[Y]][index[X]])
+		index[X] = -1;
+		while (map[index[Y]][++index[X]])
 		{
 			if (check_compoenent(map[index[Y]][index[X]], cep_count) == FALSE)
 				return (FALSE);
@@ -97,9 +98,7 @@ static int	is_valid_component(char **map, int *total_item_count, int player[])
 				player[X] = index[X];
 				map[index[Y]][index[X]] = EMPTY;
 			}
-			index[X]++;
 		}
-		index[Y]++;
 	}
 	if (cep_count[0] < 1 || cep_count[1] != 1 || cep_count[2] != 1)
 		return (FALSE);
