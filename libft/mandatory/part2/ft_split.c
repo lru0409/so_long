@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:33:45 by rolee             #+#    #+#             */
-/*   Updated: 2024/03/20 17:20:07 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 10:37:06 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	get_word_count(char const *s, char c);
 static int	get_word_len(char const *s, char c);
 static int	alloc_put_word(char **result, char const *s, char c, int i);
-static int	set_result(char **result, char const *s, char c);
+static int	set_result(char **result, char const *s, char c, int word_count);
 
 char	**ft_split(char const *s, char c)
 {
@@ -23,12 +23,11 @@ char	**ft_split(char const *s, char c)
 	char	**result;
 
 	word_count = get_word_count(s, c);
-	if (!word_count)
-		return (0);
-	result = (char **)malloc(sizeof(char *) * (word_count + 1));
-	if (!result)
+	if (word_count == 0)
 		return (NULL);
-	if (set_result(result, s, c) == -1)
+	result = (char **)malloc(sizeof(char *) * (word_count + 1));
+	result[word_count] = NULL;
+	if (set_result(result, s, c, word_count) == -1)
 		return (NULL);
 	return (result);
 }
@@ -59,31 +58,26 @@ static int	get_word_count(char const *s, char c)
 	return (count);
 }
 
-static int	set_result(char **result, char const *s, char c)
+static int	set_result(char **result, char const *s, char c, int word_count)
 {
 	int	word_idx;
 	int	str_idx;
 
 	str_idx = 0;
-	if (!s)
-	{
-		result[0] = 0;
-		return (0);
-	}
 	while (s[str_idx] == c && s[str_idx])
 		str_idx++;
 	word_idx = 0;
-	while (word_idx < get_word_count(s, c))
+	while (word_idx < word_count)
 	{
 		if (alloc_put_word(result, &s[str_idx], c, word_idx) == -1)
 			return (-1);
-		while (s[str_idx] != c && word_idx + 1 != get_word_count(s, c))
+		while (s[str_idx] != c && word_idx + 1 != word_count)
 			str_idx++;
-		while (s[str_idx] == c && word_idx + 1 != get_word_count(s, c))
+		while (s[str_idx] == c && word_idx + 1 != word_count)
 			str_idx++;
 		word_idx++;
 	}
-	result[word_idx] = 0;
+	result[word_idx] = NULL;
 	return (0);
 }
 
@@ -104,8 +98,6 @@ static int	alloc_put_word(char **result, char const *s, char c, int i)
 		return (-1);
 	}
 	idx = 0;
-	while (s[idx] == c)
-		idx++;
 	while (s[idx] != c && s[idx])
 	{
 		result[i][idx] = s[idx];
@@ -118,16 +110,9 @@ static int	alloc_put_word(char **result, char const *s, char c, int i)
 static int	get_word_len(char const *s, char c)
 {
 	int	idx;
-	int	len;
 
 	idx = 0;
-	while (s[idx] == c)
-		idx++;
-	len = 0;
 	while (s[idx] != c && s[idx])
-	{
-		len++;
 		idx++;
-	}
-	return (len);
+	return (idx);
 }

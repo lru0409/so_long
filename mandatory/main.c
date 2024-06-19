@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:32:35 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/17 11:16:20 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 10:39:31 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	main(int argc, char *argv[])
 		return (end(EXIT_FAILURE, game));
 	if (is_valid_map(game) == FALSE)
 		return (end(EXIT_FAILURE, game));
-
 	game->win = mlx_new_window(game->mlx, \
 		game->map_size[WIDTH] * 64, game->map_size[HEIGHT] * 64, "so_long");
 	render_map(game);

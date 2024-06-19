@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 20:35:52 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/17 11:16:08 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 10:42:50 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static int	check_compoenent(char c, int cep_count[]);
 int	is_valid_map(t_game *game)
 {
 	if (is_rectangle(game->map, game->map_size) == FALSE)
-		return (error(FALSE, "Invalid Map"));
+		return (error(FALSE, "Map Is Not Rectangle."));
 	if (is_surrounded_wall(game->map) == FALSE)
-		return (error(FALSE, "Invalid Map"));
+		return (error(FALSE, "Map Is Not Surrounded By Wall."));
 	if (is_valid_component(game->map, &game->total_item_count, game->player) == FALSE)
-		return (error(FALSE, "Invalid Map"));
+		return (error(FALSE, "Map Component Is Invalid."));
 	if (is_valid_path(game) == FALSE)
-		return (error(FALSE, "Invalid Map"));
+		return (error(FALSE, "Map Path Is Invalid."));
 	return (TRUE);
 }
 

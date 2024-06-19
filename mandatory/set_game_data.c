@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:41:45 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/17 11:15:17 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/19 10:37:50 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ static int	set_map(char *filename, t_game *game)
 	if (fd < 0)
 		return (error(EXIT_FAILURE, "Invalid File"));
 	map_str = get_map_str(fd);
+
 	close(fd);
 	if (!map_str)
 		return (EXIT_FAILURE);
-	if (is_valid_newline(map_str) == FALSE)
+	if (map_str[0] == '\0' || is_valid_newline(map_str) == FALSE)
 	{
 		free(map_str);
 		return (error(EXIT_FAILURE, "Invalid Map"));

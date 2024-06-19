@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:16:59 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/17 11:13:43 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/18 19:52:39 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	move_player(t_game *game, int dir_index)
 		return;
 	if (game->map[ny][nx] == ITEM) {
 		game->current_item_count++;
+		game->map[ny][nx] = EMPTY;
 		render_sqaure(game, game->images->empty, ny, nx);
 	}
 	render_sqaure(game, game->images->empty, game->player[Y], game->player[X]);

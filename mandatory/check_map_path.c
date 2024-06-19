@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 12:53:16 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/17 10:57:46 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/18 20:00:02 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ static void	check_path(t_game *game, t_path *path, int y, int x)
 	if (path->map[y][x] == ITEM)
 		path->item_count += 1;
 	if (path->map[y][x] == EXIT)
+	{
 		path->exit_count += 1;
+		return;
+	}
 	index = 0;
 	while (index < 4)
 	{
