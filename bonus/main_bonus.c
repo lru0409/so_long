@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 20:46:28 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/20 21:32:27 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/20 21:43:43 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	main(int argc, char *argv[])
 	game->win = mlx_new_window(game->mlx, \
 		game->map_size[W] * 64, game->map_size[H] * 64 + 64, "so_long");
 	render(game);
-	// mlx_key_hook(game->win, &press_key, game);
-	// mlx_hook(game->win, CLOSE_BUTTON, 0, &exit_game, game);
+	mlx_key_hook(game->win, &press_key, game);
+	mlx_hook(game->win, CLOSE_BUTTON, 0, &exit_game, game);
 	mlx_loop(game->mlx);
 	return (EXIT_SUCCESS);
 }

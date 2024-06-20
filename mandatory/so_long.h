@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:32:52 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/20 20:42:23 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/20 21:43:09 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int		is_valid_map(t_game *game);
 int		is_valid_path(t_game *game);
 
 // render
-void	render_sqaure(t_game *game, void *image, int y, int x);
+void	render_square(t_game *game, void *image, int y, int x);
 void	render_map(t_game *game);
 
 // manage_evnet

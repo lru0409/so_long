@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 20:40:01 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/20 21:31:58 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/20 21:43:53 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,10 @@ int		is_valid_path(t_game *game);
 // render
 void	render_square(t_game *game, void *image, int y, int x);
 void	render(t_game *game);
+void	render_player(t_game *game);
+
+// manage_event
+int		exit_game(t_game *game);
+int		press_key(int keycode, t_game *game);
 
 #endif
