@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 12:32:52 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/20 20:42:23 by rolee            ###   ########.fr       */
+/*   Created: 2024/06/20 20:40:01 by rolee             #+#    #+#             */
+/*   Updated: 2024/06/20 21:31:58 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include <fcntl.h>
 # include <unistd.h>
@@ -26,7 +26,10 @@
 # define WALL_PATH "./textures/wall.xpm"
 # define ITEM_PATH "./textures/item.xpm"
 # define EXIT_PATH "./textures/exit.xpm"
-# define PLAYER_PATH "./textures/player_down_0.xpm"
+# define PLAYER_UP_PATH "./textures/player_up_"
+# define PLAYER_DOWN_PATH "./textures/player_down_"
+# define PLAYER_LEFT_PATH "./textures/player_left_"
+# define PLAYER_RIGHT_PATH "./textures/player_right_"
 
 # define EMPTY '0'
 # define WALL '1'
@@ -38,6 +41,7 @@
 # define W 1
 # define Y 0
 # define X 1
+# define DIR 2
 
 # define UP 0
 # define DOWN 1
@@ -57,7 +61,7 @@ typedef struct s_images
 	void	*wall;
 	void	*item;
 	void	*exit;
-	void	*player;
+	void	*player[4][4];
 }	t_images;
 
 typedef struct s_game
@@ -69,7 +73,7 @@ typedef struct s_game
 	int			map_size[2];
 	int			total_item_count;
 	int			current_item_count;
-	int			player[2];
+	int			player[3];
 	int			dir[2][4];
 	int			move_count;
 }	t_game;
@@ -96,11 +100,7 @@ int		is_valid_map(t_game *game);
 int		is_valid_path(t_game *game);
 
 // render
-void	render_sqaure(t_game *game, void *image, int y, int x);
-void	render_map(t_game *game);
-
-// manage_evnet
-int		exit_game(t_game *game);
-int		press_key(int keycode, t_game *game);
+void	render_square(t_game *game, void *image, int y, int x);
+void	render(t_game *game);
 
 #endif

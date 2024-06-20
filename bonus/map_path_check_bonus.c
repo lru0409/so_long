@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map_path.c                                   :+:      :+:    :+:   */
+/*   map_path_check_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/07 12:53:16 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/19 11:54:26 by rolee            ###   ########.fr       */
+/*   Created: 2024/06/20 21:10:34 by rolee             #+#    #+#             */
+/*   Updated: 2024/06/20 21:10:54 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 static t_path	*init_path_data(t_game *game);
 static int		init_visited(int map_size[], int **visited);
@@ -45,7 +45,7 @@ static t_path	*init_path_data(t_game *game)
 	path->exit_count = 0;
 	path->item_count = 0;
 	path->visited = NULL;
-	path->visited = (int **)malloc(sizeof(int *) * game->map_size[HEIGHT]);
+	path->visited = (int **)malloc(sizeof(int *) * game->map_size[H]);
 	if (!path->visited || \
 		init_visited(game->map_size, path->visited) == EXIT_FAILURE)
 	{
@@ -62,16 +62,16 @@ static int	init_visited(int map_size[], int **visited)
 	int	count;
 
 	count = 0;
-	while (count < map_size[HEIGHT])
+	while (count < map_size[H])
 	{
-		visited[count] = (int *)malloc(sizeof(int) * map_size[WIDTH]);
+		visited[count] = (int *)malloc(sizeof(int) * map_size[W]);
 		if (!visited[count])
 		{
 			while (count--)
 				free(visited[count]);
 			return (EXIT_FAILURE);
 		}
-		ft_memset(visited[count], FALSE, sizeof(int) * map_size[WIDTH]);
+		ft_memset(visited[count], FALSE, sizeof(int) * map_size[W]);
 		count++;
 	}
 	return (EXIT_SUCCESS);
@@ -110,7 +110,7 @@ static void	clear_path_data(t_path *path, int map_size[])
 	int	index;
 
 	index = 0;
-	while (index < map_size[HEIGHT])
+	while (index < map_size[H])
 		free(path->visited[index++]);
 	free(path->visited);
 	free(path);

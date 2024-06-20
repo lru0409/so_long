@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:51:36 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/17 11:06:26 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/20 20:42:23 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	render_map(t_game *game)
 	int	x;
 
 	y = 0;
-	while (y < game->map_size[HEIGHT])
+	while (y < game->map_size[H])
 	{
 		x = 0;
-		while (x < game->map_size[WIDTH])
+		while (x < game->map_size[W])
 		{
 			render_sqaure(game, game->images->empty, y, x);
 			if (game->map[y][x] == WALL)

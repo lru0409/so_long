@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 12:32:35 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/20 20:49:15 by rolee            ###   ########.fr       */
+/*   Created: 2024/06/20 20:46:28 by rolee             #+#    #+#             */
+/*   Updated: 2024/06/20 21:32:27 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 static int		check_arg(int argc, char *argv[]);
 static t_game	*init_game_data(void);
@@ -30,10 +30,10 @@ int	main(int argc, char *argv[])
 	if (set_images(game) == EXIT_FAILURE)
 		return (end(EXIT_FAILURE, game));
 	game->win = mlx_new_window(game->mlx, \
-		game->map_size[W] * 64, game->map_size[H] * 64, "so_long");
-	render_map(game);
-	mlx_key_hook(game->win, &press_key, game);
-	mlx_hook(game->win, CLOSE_BUTTON, 0, &exit_game, game);
+		game->map_size[W] * 64, game->map_size[H] * 64 + 64, "so_long");
+	render(game);
+	// mlx_key_hook(game->win, &press_key, game);
+	// mlx_hook(game->win, CLOSE_BUTTON, 0, &exit_game, game);
 	mlx_loop(game->mlx);
 	return (EXIT_SUCCESS);
 }
@@ -66,6 +66,7 @@ static t_game	*init_game_data(void)
 	game->total_item_count = 0;
 	game->current_item_count = 0;
 	ft_memset(game->player, 0, sizeof(game->player));
+	game->player[DIR] = DOWN;
 	ft_memset(game->dir, 0, sizeof(game->dir));
 	game->dir[Y][UP] = -1;
 	game->dir[Y][DOWN] = 1;

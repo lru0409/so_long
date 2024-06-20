@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
+/*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 20:35:52 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/19 10:49:42 by rolee            ###   ########.fr       */
+/*   Updated: 2024/06/20 20:50:13 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ static int	is_rectangle(char **map, int map_size[])
 		j = 0;
 		while (map[i][j])
 			j++;
-		if (map_size[WIDTH] == 0)
-			map_size[WIDTH] = j;
-		else if (map_size[WIDTH] != j)
+		if (map_size[W] == 0)
+			map_size[W] = j;
+		else if (map_size[W] != j)
 			return (FALSE);
 		i++;
 	}
-	map_size[HEIGHT] = i;
+	map_size[H] = i;
 	return (TRUE);
 }
 
