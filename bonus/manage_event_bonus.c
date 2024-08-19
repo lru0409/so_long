@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 21:36:20 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/20 21:45:10 by rolee            ###   ########.fr       */
+/*   Updated: 2024/08/19 12:33:11 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ static void	move_player(t_game *game, int dir_index)
 		game->map[ny][nx] = EMPTY;
 		render_square(game, game->images->empty, ny + 1, nx);
 	}
-	render_square(game, game->images->empty, game->player[Y] + 1, game->player[X]);
+	render_square(game, game->images->empty, \
+					game->player[Y] + 1, game->player[X]);
 	game->player[Y] = ny;
 	game->player[X] = nx;
 	game->player[DIR] = dir_index;
-	render_player(game);
 	game->move_count++;
+	render_player(game);
+	render_move_count(game);
 }
 
 static void	game_clear(t_game *game)

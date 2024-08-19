@@ -6,13 +6,12 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 21:14:18 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/20 21:40:25 by rolee            ###   ########.fr       */
+/*   Updated: 2024/08/19 12:32:33 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-static void	render_move_count(t_game *game);
 static void	render_map(t_game *game);
 
 void	render_square(t_game *game, void *image, int y, int x)
@@ -27,7 +26,7 @@ void	render(t_game *game)
 	render_player(game);
 }
 
-static void	render_move_count(t_game *game)
+void	render_move_count(t_game *game)
 {
 	int		i;
 	char	*move_count;

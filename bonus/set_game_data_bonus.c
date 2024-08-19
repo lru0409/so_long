@@ -6,7 +6,7 @@
 /*   By: rolee <rolee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 20:54:07 by rolee             #+#    #+#             */
-/*   Updated: 2024/06/20 21:34:51 by rolee            ###   ########.fr       */
+/*   Updated: 2024/08/19 12:31:47 by rolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static char	*get_file_path(int dir, int count)
 		temp = ft_strjoin(PLAYER_RIGHT_PATH, ft_itoa(count));
 	file_path = ft_strjoin(temp, ".xpm");
 	free(temp);
-	return file_path;
+	return (file_path);
 }
 
 void	clear_game_data(t_game *game)
